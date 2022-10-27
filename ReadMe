@@ -1,0 +1,7 @@
+lancer le scrapping :
+
+sans options :
+python3 app.py
+
+avec options :
+python3 app.py nb_page=nb

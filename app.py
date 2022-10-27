@@ -9,6 +9,18 @@ import csv
 Database.connectDb()
 Database.createTable()
 
+arguments = sys.argv[1:]
+print(arguments)
+try:
+    for arg in arguments:
+        if 'nb_page=' in arg :
+            nb_anime = arg.split('=')[-1]
+        if 'tags=' in arg:
+            tags = arg.split('=')[-1]
+except:
+    nb_anime = 50
+    tags = 'popular'
+
 driver = webdriver.Chrome('./chromedriver.exe')
 driver.get("https://www.crunchyroll.com/fr/videos/popular")
 sleep(5)
@@ -18,7 +30,7 @@ nb_anime = 36
 def scroll_down(nb_scroll) :
     for i in range(nb_scroll):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        print('scrollDown: %i', i)
+        print('scrollDown: ', i)
         sleep(3)
 
 def infos_anime(start, nb_anime, max_anime, page) :
@@ -41,7 +53,6 @@ def infos_anime(start, nb_anime, max_anime, page) :
         infos = driver.find_element(By.CLASS_NAME, "erc-series-hero")
         try:
             item['name'] = infos.find_element(By.CLASS_NAME, "title").text
-            print(item['name'])
         except:
             item['name'] = None
         rating = [rate.text for rate in infos.find_element(
@@ -100,13 +111,6 @@ def get_infos_page(nb_anime):
     sleep(10)
     return data
 
-
-arguments = sys.argv[1:]
-print(arguments)
-try :
-    nb_anime = arguments[0]
-except :
-    nb_anime = 50
 data = get_infos_page(nb_anime)
 
 print(data)
