@@ -4,4 +4,8 @@ sans options :
 python3 app.py
 
 avec options :
-python3 app.py nb_page=nb
+python3 app.py options=val
+
+options :
+nb_page = fonctionnel
+tags = non fonctionnel
